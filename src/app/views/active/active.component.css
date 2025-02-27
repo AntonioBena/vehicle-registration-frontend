@@ -17,6 +17,16 @@
   margin-right: auto;
 }
 
+.password-container{
+  text-align: center;
+}
+
+.password{
+  font-size: large;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
 
 .active-card {
   background-color: #FFFFFF;

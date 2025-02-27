@@ -2,14 +2,17 @@
   <mat-card class="active-card">
     <mat-card-header class="header">
       <mat-card-title-group class="headers-group" >
-        <mat-card-title>Your account is active</mat-card-title>
+        <mat-card-title>Hello {{accountId}}</mat-card-title>
         <mat-card-subtitle></mat-card-subtitle>
-        <p>{{accountId}}</p>
+        <p>Your account is sucessfully created!</p>
       </mat-card-title-group>
     </mat-card-header>
     <mat-card-content>
 
-      <p>this will be generated password</p>
+      <div class="password-container">
+        <p>This is your password:</p>
+      <p class="password">{{password}}</p>
+      </div>
 
       <button mat-flat-button class="full-width" (click)="backToLogin()">
         Back to login

@@ -66,7 +66,9 @@ export class RegisterComponent {
         .subscribe((data) => {
           this.showToast('success', 'Account is now activated');
           //TODO route to verification
-          this.router.navigate(['/active', { data: auth.accountId }]);
+          console.log("data from register")
+          console.log(data)
+          this.router.navigate(['/active'], { queryParams: { accountId: auth.accountId, password: data.password } } );
         });
     }
   }

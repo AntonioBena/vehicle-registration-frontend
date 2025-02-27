@@ -26,13 +26,16 @@ import { ToastrService } from '../../service/toastr.service';
 export class ActiveComponent {
 
   accountId: string = '';
+  password: string = '';
 
   constructor(
     private router: Router,
     public route: ActivatedRoute
   ){
-    route.params.subscribe(params => {
-      this.accountId = params['data']
+
+    this.route.queryParams.subscribe(params => {
+      this.accountId = params['accountId'];
+      this.password = params['password'];
     });
   }
 

@@ -63,12 +63,27 @@ export class LoginComponent {
             return throwError(() => new Error('Login error ' + error));
           })
         )
-        .subscribe((data) => {
+        .subscribe((resp) => {
+          console.log("Login ", resp);
           this.showToast('success', 'Loged in!');
           //TODO route to verification
           this.credentialsService.userCredentials = auth;
-          this.showToast('success', 'Successfully logged in!');
-          //this.router.navigate(['/active', { data: auth.accountId }]);
+          this.showToast('success', 'Successfully logged in!'); //{ queryParams: { v1: p1, v2: p2 } }
+          // this.router.navigate(['/dashboard', {
+          //   queryParams: {
+          //     id: resp.data.id,
+          //     email: resp.data.email,
+          //     firstName: resp.data.firstName,
+          //     lastName: resp.data.lastName,
+          //     createdAt: resp.data.createdAt
+          //   }
+          // }
+          // ]);
+
+          this.router.navigate(['/dashboard'], {
+            state: { user: resp.data }
+          });
+
         });
     }
   }
