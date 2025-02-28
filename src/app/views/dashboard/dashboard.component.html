@@ -11,12 +11,10 @@
 </mat-toolbar>
 
 
-<mat-tab-group class="tabs">
+<mat-tab-group class="tabs" (selectedTabChange)="onTabChange($event)">
   <mat-tab label="Check Registration" class="t-bck">
-
     <div class="card-container">
       <mat-card class="card">
-
         <mat-card-header>
           <div class="mh1">
             <mat-card-title class="expiration-title">Check Vehicle Registration Expiration</mat-card-title>
@@ -40,10 +38,8 @@
         </mat-card-content>
       </mat-card>
     </div>
-
   </mat-tab>
   <mat-tab label="Register Vehicle" class="t-bck1">
-
     <div class="card-container">
       <mat-card class="card">
         <mat-card-header>
@@ -59,7 +55,6 @@
                   <mat-label>Vehicle Make</mat-label>
                   <input matInput formControlName="make" />
                 </mat-form-field>
-
                 <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Vehicle Model</mat-label>
                   <input matInput formControlName="model" />
@@ -89,7 +84,59 @@
       </mat-card>
     </div>
 
+  </mat-tab>
+  <mat-tab label="My Statistics" class="t-bck2">
+
+    <div class="card-container">
+      <mat-card class="card">
+        <mat-card-header>
+          <div class="mh1">
+            <mat-card-title class="expiration-title">My Statistics</mat-card-title>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="vehicle-exp-container">
+            <div>
+              <p>{{myStatistics}}</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
   </mat-tab>
-  <mat-tab label="Third" class="t-bck2"> Content 3 </mat-tab>
+  <mat-tab label="All Statistics" class="t-bck2">
+
+    <div class="card-container">
+      <mat-card class="card">
+        <mat-card-header>
+          <div class="mh1">
+            <mat-card-title class="expiration-title">All Accounts Statistics</mat-card-title>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div class="table-container">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="numberOfVehicles">
+                <th mat-header-cell *matHeaderCellDef> Number of Registrations </th>
+                <td mat-cell *matCellDef="let element"> {{ element.numberOfVehicles }} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-tab>
 </mat-tab-group>
