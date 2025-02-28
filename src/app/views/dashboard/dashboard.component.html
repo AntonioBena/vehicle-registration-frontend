@@ -10,27 +10,86 @@
   </button>
 </mat-toolbar>
 
-<div class="card-container">
-  <mat-card class="card">
-    <mat-card-content>
 
-      <div class="demo-button-container">
-        <div class="form-fields">
-          <form [formGroup]="accountForm">
-            <mat-form-field appearance="outline" class="full-width-form-field">
-              <mat-label>Account id</mat-label>
-              <input matInput formControlName="accountId"  required/>
-            </mat-form-field>
-          </form>
-        </div>
-        <button mat-stroked-button class="demo-button-advanced-search"
-        [disabled]="!accountForm.valid"
-        (click)="getMyRegisteredVehicles()">Check</button>
-        <button mat-flat-button color="secondary" class="demo-button" (click)="registerNewVehicle()">
-          Register new vehicle
-        </button>
-      </div>
+<mat-tab-group class="tabs">
+  <mat-tab label="Check Registration" class="t-bck">
 
-    </mat-card-content>
-  </mat-card>
-</div>
+    <div class="card-container">
+      <mat-card class="card">
+
+        <mat-card-header>
+          <div class="mh1">
+            <mat-card-title class="expiration-title">Check Vehicle Registration Expiration</mat-card-title>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="vehicle-exp-container">
+            <div class="vehicle-exp-field">
+              <form [formGroup]="accountForm">
+                <mat-form-field appearance="outline" class="full-width-form-field">
+                  <mat-label>Account id</mat-label>
+                  <input matInput formControlName="accountId" type="email" required />
+                </mat-form-field>
+              </form>
+            </div>
+            <div>
+              <button mat-stroked-button class="demo-button-advanced-search" [disabled]="!accountForm.valid"
+                (click)="checkRegistered()">Check</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="Register Vehicle" class="t-bck1">
+
+    <div class="card-container">
+      <mat-card class="card">
+        <mat-card-header>
+          <div class="mh1">
+            <mat-card-title class="expiration-title">Register New Vehicle</mat-card-title>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-grid">
+            <form [formGroup]="vehicleForm">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Vehicle Make</mat-label>
+                  <input matInput formControlName="make" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field full-width">
+                  <mat-label>Vehicle Model</mat-label>
+                  <input matInput formControlName="model" />
+                </mat-form-field>
+              </div>
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Registration number</mat-label>
+                  <input matInput formControlName="registrationId" required />
+                </mat-form-field>
+                <mat-form-field>
+                  <input required matInput placeholder="Registration Expiration Date" formControlName="receiptDate"
+                    [matDatepicker]="receiptDateDatePicker">
+                  <mat-datepicker-toggle matSuffix [for]="receiptDateDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #receiptDateDatePicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+          <mat-card-actions class="mat-card-options">
+            <button [disabled]="!this.vehicleForm.valid" mat-flat-button color="secondary" class="demo-button"
+              (click)="registerNewVehicle()">
+              Register new vehicle
+            </button>
+          </mat-card-actions>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+  </mat-tab>
+  <mat-tab label="Third" class="t-bck2"> Content 3 </mat-tab>
+</mat-tab-group>

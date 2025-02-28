@@ -56,7 +56,7 @@ export class LoginComponent {
         .login(auth)
         .pipe(
           catchError((error) => {
-            if (error.status === 400) {
+            if (error.status === 401) {
               this.showToast('error', 'Please check your credentials');
             }
             console.error('Login error:' + error);
@@ -69,17 +69,6 @@ export class LoginComponent {
           //TODO route to verification
           this.credentialsService.userCredentials = auth;
           this.showToast('success', 'Successfully logged in!'); //{ queryParams: { v1: p1, v2: p2 } }
-          // this.router.navigate(['/dashboard', {
-          //   queryParams: {
-          //     id: resp.data.id,
-          //     email: resp.data.email,
-          //     firstName: resp.data.firstName,
-          //     lastName: resp.data.lastName,
-          //     createdAt: resp.data.createdAt
-          //   }
-          // }
-          // ]);
-
           this.router.navigate(['/dashboard'], {
             state: { user: resp.data }
           });
