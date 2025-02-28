@@ -4,13 +4,10 @@
   </button>
   <span>Wellcome {{name}}</span>
   <span class="example-spacer"></span>
-
   <button (click)="onLogout()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
-
-
 <mat-tab-group class="tabs" (selectedTabChange)="onTabChange($event)">
   <mat-tab label="Check Registration" class="t-bck">
     <div class="card-container">
@@ -83,10 +80,8 @@
         </mat-card-content>
       </mat-card>
     </div>
-
   </mat-tab>
   <mat-tab label="My Statistics" class="t-bck2">
-
     <div class="card-container">
       <mat-card class="card">
         <mat-card-header>
@@ -95,31 +90,25 @@
           </div>
         </mat-card-header>
         <mat-card-content>
-
           <div class="table-container">
             <table mat-table [dataSource]="myDataSource" class="demo-table">
               <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef> Email </th>
                 <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
               </ng-container>
-
               <ng-container matColumnDef="numberOfVehicles">
                 <th mat-header-cell *matHeaderCellDef> Number of Registrations </th>
                 <td mat-cell *matCellDef="let element"> {{ element.numberOfVehicles }} </td>
               </ng-container>
-
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
           </div>
-
         </mat-card-content>
       </mat-card>
     </div>
-
   </mat-tab>
   <mat-tab label="All Statistics" class="t-bck2">
-
     <div class="card-container">
       <mat-card class="card">
         <mat-card-header>
@@ -128,28 +117,22 @@
           </div>
         </mat-card-header>
         <mat-card-content>
-
           <div class="table-container">
             <table mat-table [dataSource]="dataSource" class="demo-table">
               <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef> Email </th>
                 <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
               </ng-container>
-
               <ng-container matColumnDef="numberOfVehicles">
                 <th mat-header-cell *matHeaderCellDef> Number of Registrations </th>
                 <td mat-cell *matCellDef="let element"> {{ element.numberOfVehicles }} </td>
               </ng-container>
-
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
           </div>
-
-
         </mat-card-content>
       </mat-card>
     </div>
-
   </mat-tab>
 </mat-tab-group>

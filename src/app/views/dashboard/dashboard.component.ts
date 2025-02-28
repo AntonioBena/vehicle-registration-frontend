@@ -63,7 +63,6 @@ import { StatisticsService } from '../../service/StatisticsService';
     MatNativeDateModule,
     MatCardHeader,
     MatCardTitle,
-    MatCardSubtitle,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -115,11 +114,13 @@ export class DashboardComponent implements OnInit {
   }
 
   setUserNameOrAccountId(data: any) {
-   let user = new UserDto();
-   user.accountId = data.email;
-   user.firstName = data.firstName;
+    let user = new UserDto();
+    user.accountId = data.email;
+    user.firstName = data.firstName;
 
-    return (!user.firstName || user.firstName.trim() === '') ? user.accountId : user.firstName;
+    return !user.firstName || user.firstName.trim() === ''
+      ? user.accountId
+      : user.firstName;
   }
 
   onTabChange(event: any): void {
@@ -132,7 +133,7 @@ export class DashboardComponent implements OnInit {
         this.getMyStatistics();
         break;
       case 3:
-        this.getStatisticsForAllAccounts(0, 3);
+        this.getStatisticsForAllAccounts(0, 50); //TODO should be pagination with buttons to change this, and caching
         break;
       default:
         console.log('Invalid tab');
@@ -207,9 +208,6 @@ export class DashboardComponent implements OnInit {
           email: key,
           numberOfVehicles: data[key]
         }));
-
-        console.log("Formatted for table: ", formattedData);
-        return new MatTableDataSource(formattedData);
       }
     }
     console.log("No valid data in: ", responseData);
@@ -230,8 +228,14 @@ export class DashboardComponent implements OnInit {
         })
       )
       .subscribe((resp) => {
-        console.log('gettered sttistics ', resp.data);
-        this.myDataSource = this.formatDataForTable(resp)
+        console.log('gettered sttistics ', resp);
+
+        const formattedData = Object.keys(resp.data).map(key => ({
+          email: key,
+          numberOfVehicles: resp.data[key]
+        }));
+
+        this.myDataSource = new MatTableDataSource(formattedData);
       });
   }
 

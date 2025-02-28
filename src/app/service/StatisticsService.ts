@@ -18,6 +18,9 @@ export class StatisticsService {
   }
 
   public getAllStatistics(page: number, size: number): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size);
     return this.http.get<any>(`${this.baseUrl}/statistics/all-accounts`);
   }
 }
