@@ -115,3 +115,18 @@ mat-form-field {
   text-overflow: ellipsis;
 }
 
+
+.paginator{
+  background-color: #FFFFFF;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.demo-table {
+  background-color: #FFFFFF;
+  width: 100%;
+  table-layout: fixed;
+}

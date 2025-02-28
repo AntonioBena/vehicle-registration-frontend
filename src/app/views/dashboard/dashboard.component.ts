@@ -79,6 +79,7 @@ export class DashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['email', 'numberOfVehicles'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  myDataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   constructor(
     private fb: FormBuilder,
@@ -110,25 +111,23 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = history.state.user;
-    console.log('Received user:', this.user);
     this.name = this.setUserNameOrAccountId(this.user);
+  }
 
-    //TODO stav nest ako nemas auta reganog
+  setUserNameOrAccountId(data: any) {
+   let user = new UserDto();
+   user.accountId = data.email;
+   user.firstName = data.firstName;
+
+    return (!user.firstName || user.firstName.trim() === '') ? user.accountId : user.firstName;
   }
 
   onTabChange(event: any): void {
-    console.log('Selected Tab Index: ', event.index);
-    console.log('Selected Tab Label: ', event.tab.textLabel);
     this.callMethodBasedOnTab(event.index);
   }
 
-
   callMethodBasedOnTab(index: number): void {
     switch (index) {
-      case 0:
-        break;
-      case 1:
-        break;
       case 2:
         this.getMyStatistics();
         break;
@@ -163,6 +162,7 @@ export class DashboardComponent implements OnInit {
         )
         .subscribe((resp) => {
           this.showToast('success', 'Vehicle is successfully registered ');
+          this.vehicleForm.reset();
         });
     }
   }
@@ -183,21 +183,37 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe((resp) => {
         console.log('gettered sttistics ', resp);
-        this.formatDataForTable(resp);
+        this.dataSource = this.formatDataForTable(resp);
       });
   }
 
-  formatDataForTable(responseData: any): void {
+  formatDataForTable(responseData: any): any {
     if (responseData && responseData.data) {
-      console.log("Pageable data: ", responseData.data)
-      const formattedData = Object.keys(responseData.data.content).map(key => ({
-        email: key,
-        numberOfVehicles: responseData.data.content[key]
-      }));
+      const data = responseData.data;
 
-      console.log("formatted for table: ", formattedData);
-      this.dataSource = new MatTableDataSource(formattedData);
+      if (data.content) {
+        console.log("Formatted data from content: ", data.content);
+        const formattedData = Object.keys(data.content).map(key => ({
+          email: key,
+          numberOfVehicles: data.content[key]
+        }));
+
+        console.log("Formatted for table: ", formattedData);
+        return new MatTableDataSource(formattedData);
+      }
+      else {
+        console.log("Formatted data from key-value pairs: ", data);
+        const formattedData = Object.keys(data).map(key => ({
+          email: key,
+          numberOfVehicles: data[key]
+        }));
+
+        console.log("Formatted for table: ", formattedData);
+        return new MatTableDataSource(formattedData);
+      }
     }
+    console.log("No valid data in: ", responseData);
+    return new MatTableDataSource([]);
   }
 
   async getMyStatistics() {
@@ -214,19 +230,9 @@ export class DashboardComponent implements OnInit {
         })
       )
       .subscribe((resp) => {
-        console.log('gettered sttistics ', resp);
-        this.formatDataForDisplay(resp);
+        console.log('gettered sttistics ', resp.data);
+        this.myDataSource = this.formatDataForTable(resp)
       });
-  }
-
-  formatDataForDisplay(responseData: any): void {
-    if (responseData && responseData.data) {
-      this.myStatistics = Object.keys(responseData.data)
-        .map(key => `Email: ${key}, number of registered vehicles: ${responseData.data[key]}`)
-        .join(', ');
-    } else {
-      this.myStatistics = 'You have no Vehicles registered yet!';
-    }
   }
 
   async checkRegistered() {
@@ -259,10 +265,6 @@ export class DashboardComponent implements OnInit {
           }
         });
     }
-  }
-
-  setUserNameOrAccountId(user: UserDto) {
-    return !user.firstName ? user.accountId : user.firstName;
   }
 
   onLogout() {
