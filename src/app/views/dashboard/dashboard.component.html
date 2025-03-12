@@ -20,15 +20,15 @@
         <mat-card-content>
           <div class="vehicle-exp-container">
             <div class="vehicle-exp-field">
-              <form [formGroup]="accountForm">
+              <form [formGroup]="registrationForm">
                 <mat-form-field appearance="outline" class="full-width-form-field">
-                  <mat-label>Account id</mat-label>
-                  <input matInput formControlName="accountId" type="email" required />
+                  <mat-label>Registration id</mat-label>
+                  <input matInput formControlName="registrationId" required />
                 </mat-form-field>
               </form>
             </div>
             <div>
-              <button mat-stroked-button class="demo-button-advanced-search" [disabled]="!accountForm.valid"
+              <button mat-stroked-button class="demo-button-advanced-search" [disabled]="!registrationForm.valid"
                 (click)="checkRegistered()">Check</button>
             </div>
           </div>

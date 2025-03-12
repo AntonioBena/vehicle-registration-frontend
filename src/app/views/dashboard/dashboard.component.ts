@@ -68,7 +68,7 @@ import { StatisticsService } from '../../service/StatisticsService';
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  accountForm: FormGroup;
+  registrationForm: FormGroup;
   vehicleForm: FormGroup;
   name: string = '';
   user: any = {};
@@ -89,8 +89,8 @@ export class DashboardComponent implements OnInit {
     private vehicleService: VehicleService,
     private statisticsService: StatisticsService
   ) {
-    this.accountForm = this.fb.group({
-      accountId: ['', [Validators.required]],
+    this.registrationForm = this.fb.group({
+      registrationId: ['', [Validators.required]],
     });
 
     this.vehicleForm = this.fb.group({
@@ -240,17 +240,17 @@ export class DashboardComponent implements OnInit {
   }
 
   async checkRegistered() {
-    if (this.accountForm.valid) {
+    if (this.registrationForm.valid) {
       this.vehicleService
-        .checkRegisteredVehicle(this.accountForm.value.accountId)
+        .checkRegisteredVehicle(this.registrationForm.value.accountId)
         .pipe(
           catchError((error) => {
-            if (error.status === 400) {
-              this.showToast('error', 'Vehicle by email doesn exist');
+            if (error.status === 404) {
+              this.showToast('error', 'Vehicle doesnt exist');
             }
             console.error('Error:' + error);
             return throwError(
-              () => new Error('Vehicle by email doesn exist ' + error)
+              () => new Error('Vehicle doesn exist ' + error)
             );
           })
         )
