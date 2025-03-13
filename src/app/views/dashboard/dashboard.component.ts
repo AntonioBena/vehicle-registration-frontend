@@ -13,7 +13,6 @@ import {
   MatCardActions,
   MatCardContent,
   MatCardHeader,
-  MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,10 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { UserDto } from '../../models/UserDto';
 
 import {
-  MatPaginator,
-  MatPaginatorIntl,
   MatPaginatorModule,
-  PageEvent,
 } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialsService } from '../../service/auth/CredentialsService';
@@ -242,7 +238,7 @@ export class DashboardComponent implements OnInit {
   async checkRegistered() {
     if (this.registrationForm.valid) {
       this.vehicleService
-        .checkRegisteredVehicle(this.registrationForm.value.accountId)
+        .checkRegisteredVehicle(this.registrationForm.value.registrationId)
         .pipe(
           catchError((error) => {
             if (error.status === 404) {

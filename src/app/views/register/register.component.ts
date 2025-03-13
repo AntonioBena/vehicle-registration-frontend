@@ -15,6 +15,7 @@ import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../../service/auth/AuthService';
 import { ToastrService } from '../../service/toastr.service';
 import { RegistrationRequest } from '../../models/RegistrationRequest';
+import { emailValidator } from '../../validation/EmailValidator';
 
 @Component({
   selector: 'app-register',
@@ -39,7 +40,7 @@ export class RegisterComponent {
     private toastr: ToastrService
   ) {
     this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, emailValidator()]],
       firstName: [''],
       lastName: [''],
     });
@@ -58,6 +59,9 @@ export class RegisterComponent {
           catchError((error) => {
             if (error.status === 400) {
               this.showToast('error', 'Please check your inputs');
+            }
+            else if(error.status === 401){
+            this.showToast('error', 'Registration error!');
             }
             console.error('Register error:');
             return throwError(() => new Error('Register error ' + error));
@@ -78,6 +82,6 @@ export class RegisterComponent {
   }
 
   showToast(type: string, error: string) {
-    this.toastr.showToast(type, 'Login failed! ' + error, 'top-right', true);
+    this.toastr.showToast(type, error, 'top-right', true);
   }
 }

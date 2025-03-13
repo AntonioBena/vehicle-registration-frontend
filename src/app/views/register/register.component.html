@@ -18,6 +18,13 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" type="email" required />
+          <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
+            Email is required
+          </mat-error>
+
+          <mat-error *ngIf="registerForm.controls['email'].hasError('emailInvalid')">
+            Invalid email format
+          </mat-error>
         </mat-form-field>
 
         <button mat-flat-button class="full-width" [disabled]="registerForm.invalid">Register account</button>

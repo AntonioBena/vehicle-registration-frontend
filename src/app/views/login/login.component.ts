@@ -13,6 +13,7 @@ import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../../service/auth/AuthService';
 import { AuthenticationRequest } from '../../models/AuthenticationRequest';
 import { CredentialsService } from '../../service/auth/CredentialsService';
+import { emailValidator } from '../../validation/EmailValidator';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class LoginComponent {
     private credentialsService: CredentialsService
      ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, emailValidator()]],
       password: ['', [Validators.required]]
     });
   }
@@ -68,7 +69,7 @@ export class LoginComponent {
           this.showToast('success', 'Loged in!');
           //TODO route to verification
           this.credentialsService.userCredentials = auth;
-          this.showToast('success', 'Successfully logged in!'); //{ queryParams: { v1: p1, v2: p2 } }
+          this.showToast('success', 'Successfully logged in!');
           this.router.navigate(['/dashboard'], {
             state: { user: resp.data }
           });
